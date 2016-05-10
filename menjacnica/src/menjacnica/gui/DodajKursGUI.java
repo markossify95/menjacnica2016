@@ -46,7 +46,7 @@ public class DodajKursGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DodajKursGUI(MenjacnicaGUI glavniProzor) {
+	public DodajKursGUI() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DodajKursGUI.class.getResource("/icons/Screenshot.png")));
 		setResizable(false);
 		setTitle("Dodaj kurs");
@@ -71,9 +71,6 @@ public class DodajKursGUI extends JFrame {
 		contentPane.add(getBtnDodaj());
 		contentPane.add(getBtnOdus());
 		
-		//podesavanje
-		this.glavniProzor = glavniProzor;
-				
 	}
 
 	private JLabel getLblSifra() {
@@ -158,7 +155,26 @@ public class DodajKursGUI extends JFrame {
 			btnDodaj = new JButton("Dodaj");
 			btnDodaj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					unesiKurs();
+					try {
+						Valuta valuta = new Valuta();
+
+						// Punjenje podataka o valuti
+						valuta.setNaziv(textFieldNaziv.getText());
+						valuta.setSkraceniNaziv(textFieldSkraceniNaziv.getText());
+						valuta.setSifra((Integer)(spinnerSifra.getValue()));
+						valuta.setProdajni(Double.parseDouble(textFieldProdajniKurs.getText()));
+						valuta.setKupovni(Double.parseDouble(textFieldKupovniKurs.getText()));
+						valuta.setSrednji(Double.parseDouble(textFieldSrednjiKurs.getText()));
+						
+						// Dodavanje valute u kursnu listu
+						GUIKontroler.dodajValutu(valuta);
+
+						//Zatvaranje DodajValutuGUI prozora
+						dispose();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
+								"Greska", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			});
 		}
@@ -183,29 +199,4 @@ public class DodajKursGUI extends JFrame {
 		return spinnerSifra;
 	}
 	
-	private void unesiKurs() {
-		try {
-			Valuta valuta = new Valuta();
-
-			// Punjenje podataka o valuti
-			valuta.setNaziv(textFieldNaziv.getText());
-			valuta.setSkraceniNaziv(textFieldSkraceniNaziv.getText());
-			valuta.setSifra((Integer)(spinnerSifra.getValue()));
-			valuta.setProdajni(Double.parseDouble(textFieldProdajniKurs.getText()));
-			valuta.setKupovni(Double.parseDouble(textFieldKupovniKurs.getText()));
-			valuta.setSrednji(Double.parseDouble(textFieldSrednjiKurs.getText()));
-			
-			// Dodavanje valute u kursnu listu
-			glavniProzor.sistem.dodajValutu(valuta);
-
-			// Osvezavanje glavnog prozora
-			glavniProzor.prikaziSveValute();
-			
-			//Zatvaranje DodajValutuGUI prozora
-			dispose();
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
-					"Greska", JOptionPane.ERROR_MESSAGE);
-		}
-	}
 }
