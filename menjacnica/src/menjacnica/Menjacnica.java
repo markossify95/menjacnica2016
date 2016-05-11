@@ -3,7 +3,9 @@ package menjacnica;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
@@ -39,12 +41,12 @@ public class Menjacnica implements MenjacnicaInterface{
 	}
 
 	@Override
-	public void ucitajIzFajla(String putanja) {
+	public void ucitajIzFajla(String putanja) throws FileNotFoundException, ClassNotFoundException, IOException {
 		SOUcitajIzFajla.izvrsi(putanja, kursnaLista);
 	}
 
 	@Override
-	public void sacuvajUFajl(String putanja) {
+	public void sacuvajUFajl(String putanja) throws FileNotFoundException, IOException {
 		SOSacuvajUFajl.izvrsi(putanja, kursnaLista);
 	}
 
