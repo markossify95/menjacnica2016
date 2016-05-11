@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 
 import menjacnica.Valuta;
+import menjacnica.gui.models.MenjacnicaTableModel;
+
 import java.awt.Toolkit;
 
 public class IzvrsiZamenuGUI extends JFrame {
@@ -160,10 +162,15 @@ public class IzvrsiZamenuGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izracunaj iznos");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					double konacniIznos = GUIKontroler.izvrsiZamenu(valuta,
-							rdbtnProdaja.isSelected(), 
-							Double.parseDouble(textFieldIznos.getText()));
-					textFieldKonacniIznos.setText(""+konacniIznos);
+					try{
+						double iznos = Double.parseDouble(textFieldIznos.getText());
+						double konacniIznos = GUIKontroler.izvrsiZamenu(valuta,
+								rdbtnProdaja.isSelected(), 
+								iznos);
+						textFieldKonacniIznos.setText(""+konacniIznos);
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(contentPane,ex.getMessage(),"Greska", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			});
 			btnIzvrsiZamenu.setBounds(24, 234, 160, 25);

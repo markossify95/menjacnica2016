@@ -174,6 +174,7 @@ public class ObrisiKursGUI extends JFrame {
 			btnDodaj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					GUIKontroler.obrisiValutu(valuta);
+					dispose();
 				}
 			});
 			btnDodaj.setEnabled(false);
@@ -222,13 +223,4 @@ public class ObrisiKursGUI extends JFrame {
 		textFieldSrednjiKurs.setText(""+valuta.getSrednji());				
 	}
 
-	private void obrisiValutu() {
-		try{
-			GUIKontroler.obrisiValutu(valuta);
-			dispose();
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
-					"Greska", JOptionPane.ERROR_MESSAGE);
-		}
-	}
 }
